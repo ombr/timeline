@@ -1,0 +1,13 @@
+- date = Time.zone.now
+.calendar
+  - (date.beginning_of_year.to_date..date.end_of_year.to_date).select{|date| date.day == 1}.each do |month|
+    .month
+      .month-name
+          = I18n.l(month, format: :month)
+      .days
+          - (month.beginning_of_month.to_date..month.end_of_month.to_date).each do |day|
+            .day(class="#{Holidays.on(day, :fr).any? ? 'off' : ''} #{day.on_weekend? ? 'weekend' : ''}")
+                .day-number
+                  = I18n.l(day, format: :day)
+                .day-name
+                  = I18n.l(day, format: :day_name)

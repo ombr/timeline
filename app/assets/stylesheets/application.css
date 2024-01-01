@@ -1,15 +1,57 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+.calendar {
+  font-family: 'Ubuntu', sans-serif;
+}
+.month {
+    margin: 5px;
+}
+.month {
+  page-break-after: always;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  border: 1px black solid;
+  margin: 5em 1em;
+}
+.month-name {
+  padding: 30px;
+  writing-mode: vertical-rl;
+  text-transform: capitalize;
+}
+.day {
+  border: 1px black solid;
+  padding: 2px;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.off {
+  background: pink;
+  border: 1px pink solid;
+}
+.weekend {
+  background: lightgray;
+}
+.day-number {
+  writing-mode: vertical-rl;
+}
+.day-name {
+    width: 100px;
+    text-align: center;
+}
+.days {
+    flex-grow: 1;
+}
+@media print {
+  @page {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  body {
+    padding-top: 0;
+    padding-bottom: 0;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+}

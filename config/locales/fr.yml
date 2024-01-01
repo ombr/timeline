@@ -1,0 +1,6 @@
+fr:
+  date:
+    formats:
+      month: '%B'
+      day: '%d'
+      day_name: '%A'

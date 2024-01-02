@@ -1,70 +1,29 @@
+def ranges_overlap?(range_a, range_b)
+  range_b.begin <= range_a.end && range_a.begin <= range_b.end
+end
+
+Event = Struct.new(:from, :to, :name) do
+  def overlap?(range)
+    # (from..to).overlap?(range)
+    ranges_overlap?((from..to), range)
+  end
+end
+
 class HomesController < ApplicationController
-  before_action :set_home, only: %i[ show edit update destroy ]
-
-  # GET /homes or /homes.json
   def index
-    @homes = Home.all
-  end
-
-  # GET /homes/1 or /homes/1.json
-  def show
-  end
-
-  # GET /homes/new
-  def new
-    @home = Home.new
-  end
-
-  # GET /homes/1/edit
-  def edit
-  end
-
-  # POST /homes or /homes.json
-  def create
-    @home = Home.new(home_params)
-
-    respond_to do |format|
-      if @home.save
-        format.html { redirect_to home_url(@home), notice: "Home was successfully created." }
-        format.json { render :show, status: :created, location: @home }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @home.errors, status: :unprocessable_entity }
-      end
+    @events = File.read(Rails.root.join('timeline.txt')).split("\n").map do |line|
+      data = line.split(':');
+      dates = data[0].split('>')
+      Event.new(
+        from: parse(dates[0]),
+        to: parse(dates[1] || dates[0]),
+        name: data[1]
+      )
     end
   end
 
-  # PATCH/PUT /homes/1 or /homes/1.json
-  def update
-    respond_to do |format|
-      if @home.update(home_params)
-        format.html { redirect_to home_url(@home), notice: "Home was successfully updated." }
-        format.json { render :show, status: :ok, location: @home }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @home.errors, status: :unprocessable_entity }
-      end
-    end
+  def parse(input)
+    puts '>', input, Date.parse(input)
+    Date.parse(input)
   end
-
-  # DELETE /homes/1 or /homes/1.json
-  def destroy
-    @home.destroy
-
-    respond_to do |format|
-      format.html { redirect_to homes_url, notice: "Home was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_home
-      @home = Home.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def home_params
-      params.fetch(:home, {})
-    end
 end

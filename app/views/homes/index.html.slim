@@ -11,3 +11,9 @@
                   = I18n.l(day, format: :day)
                 .day-name
                   = I18n.l(day, format: :day_name)
+      .events
+        - @events.select {|event| event.overlap?((month.beginning_of_month.to_date..month.end_of_month.to_date))}.each do |event|
+          .event-line
+            .event
+              .event-name
+                = event.name

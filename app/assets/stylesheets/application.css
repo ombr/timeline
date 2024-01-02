@@ -41,7 +41,19 @@
     text-align: center;
 }
 .days {
-    flex-grow: 1;
+    // flex-grow: 1;
+}
+.events {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.event-line {
+}
+.event-name {
+  padding: 10px 2px;
+  background: lightcoral;
+  writing-mode: vertical-rl;
 }
 @media print {
   @page {

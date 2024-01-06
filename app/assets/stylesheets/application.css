@@ -1,26 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
-.calendar {
+body {
   font-family: 'Ubuntu', sans-serif;
 }
 .month {
-    margin: 5px;
-}
-.month {
-  page-break-after: always;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-direction: row-reverse;
-  border: 1px black solid;
   margin: 5em 1em;
 }
-.month-name {
-  padding: 30px;
+.month-header {
+  width: 300px;
+  text-align: center;
   writing-mode: vertical-rl;
   text-transform: capitalize;
+  position: relative;
+}
+.month-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 50px 20px;
+  font-size: 3em;
+  z-index: 1;
+  border-radius: .3em;
+}
+.month-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.day:last-child {
+  border-bottom: none;
 }
 .day {
-  border: 1px black solid;
+  box-sizing: border-box;
+  border-bottom: 1px black solid;
   padding: 2px;
   width: 100%;
   display: flex;
@@ -28,12 +46,13 @@
 }
 .off {
   background: pink;
-  border: 1px pink solid;
+  // border: 1px pink solid;
 }
 .weekend {
   background: lightgray;
 }
 .day-number {
+  text-align: center;
   writing-mode: vertical-rl;
 }
 .day-name {
@@ -45,25 +64,63 @@
 }
 .events {
   flex-grow: 1;
+  position: relative;
+  width: 100%;
+}
+.event-space {
+  width: 100%;
+}
+.event {
+  position: absolute;
+  right: 0;
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+}
+.event-box, .event-line {
+  opacity: 0.6;
+}
+.event-box {
+  width: 1em;
+  height: 100%;
 }
 .event-line {
+  width: 1em;
+  height: .5em;
 }
 .event-name {
+  white-space: nowrap;
   padding: 10px 2px;
-  background: lightcoral;
   writing-mode: vertical-rl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1em;
+}
+.event-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transform: rotate(90deg);
 }
 @media print {
   @page {
     margin-top: 0;
     margin-bottom: 0;
   }
+  .page {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    height: 100vh;
+    page-break-after: always;
+  }
   body {
     padding-top: 0;
     padding-bottom: 0;
-    -webkit-print-color-adjust:exact !important;
-    print-color-adjust:exact !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 }

@@ -2,5 +2,5 @@ fr:
   date:
     formats:
       month: '%B'
-      day: '%d'
+      day: '%e'
       day_name: '%A'

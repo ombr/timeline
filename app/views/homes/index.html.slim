@@ -1,19 +1,28 @@
 - date = Time.zone.now
 .calendar
   - (date.beginning_of_year.to_date..date.end_of_year.to_date).select{|date| date.day == 1}.each do |month|
-    .month
-      .month-name
-          = I18n.l(month, format: :month)
-      .days
-          - (month.beginning_of_month.to_date..month.end_of_month.to_date).each do |day|
-            .day(class="#{Holidays.on(day, :fr).any? ? 'off' : ''} #{day.on_weekend? ? 'weekend' : ''}")
-                .day-number
-                  = I18n.l(day, format: :day)
-                .day-name
-                  = I18n.l(day, format: :day_name)
-      .events
-        - @events.select {|event| event.overlap?((month.beginning_of_month.to_date..month.end_of_month.to_date))}.each do |event|
-          .event-line
-            .event
-              .event-name
-                = event.name
+    - month_range = (month.beginning_of_month.to_date..month.end_of_month.to_date)
+    .page
+      .month
+        .month-header
+          .month-name
+            = I18n.l(month, format: :month)
+          .month-image(style="background-image: url(/img/rotated/#{month.strftime('%m')}.jpg)")
+        .days
+            - month_range.each do |day|
+              .day(class="#{Holidays.on(day, :fr).any? ? 'off' : ''} #{day.on_weekend? ? 'weekend' : ''}")
+                  .day-number
+                    = I18n.l(day, format: :day)
+                  .day-name
+                    = I18n.l(day, format: :day_name)
+        .events
+          - @events.select {|event| event.overlap?(month_range)}.each do |event|
+            .event(style=event.style(month_range))
+              .event-box(style="background-color: #{event.color};")
+              .event-line(style="background-color: #{event.color};#{event.line_style(@events)}")
+              .event-name(style="background-color: #{event.color}")
+                - if event.image.present?
+                  img.event-image(src=event.image)
+                  = event.name
+                - else
+                  = event.name
